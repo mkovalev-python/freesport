@@ -8,6 +8,8 @@ COPY . /app
 ENV PATH /app/node_modules/.bin:$PATH
 
 RUN yarn
+ARG MAX_OLD_SPACE_SIZE=8192
+ENV NODE_OPTIONS=--max_old_space_size=$MAX_OLD_SPACE_SIZE
 
 RUN yarn build
 
