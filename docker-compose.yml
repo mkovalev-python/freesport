@@ -1,0 +1,17 @@
+version: "3.3"
+
+services:
+
+  react-prod:
+    restart: always
+    container_name: react-prod
+    build:
+      context: .
+      dockerfile:
+        Dockerfile
+    ports:
+      - "80:80"
+
+
+
+
