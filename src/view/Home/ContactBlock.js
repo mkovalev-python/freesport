@@ -19,7 +19,7 @@ export default function ContactBlock(){
                 xl={10}
                 >
                     <p className="p1" style={{fontSize:'24px'}}>Адрес:</p>
-                    <p className="p2" style={{fontSize:'18px', marginTop:"-20px"}}>119991 Москва, Ленинский просп., 14</p>
+                    <p className="p2" style={{fontSize:'18px', marginTop:"-20px"}}>119991 Москва, Маркса просп., 123 </p>
                 </Col>
             </Row>
             <Row justify="center" style={{marginTop: "45px"}}>
