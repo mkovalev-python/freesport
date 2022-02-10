@@ -1,23 +1,25 @@
-# The first stage
-# Build React static files
-FROM node:13.12.0-alpine as build
+FROM node:alpine as build
 
 WORKDIR /app
 
-# add `/app/node_modules/.bin` to $PATH
+COPY . /app
+
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY ./package.json ./
-COPY ./package-lock.json ./
-RUN npm install
+RUN yarn
+ARG MAX_OLD_SPACE_SIZE=8192
+ENV NODE_OPTIONS=--max_old_space_size=$MAX_OLD_SPACE_SIZE
 
-COPY . ./
-RUN npm run build
-RUN npx browserslist@latest --update-db
+RUN yarn build
 
-# The second stage
-# Copy React static files and start nginx
-FROM nginx:stable-alpine
-COPY ./nginx.conf /etc/nginx/
+FROM nginx:alpine
+
 COPY --from=build /app/build /usr/share/nginx/html
+
+RUN rm /etc/nginx/conf.d/default.conf
+
+COPY ./nginx.conf /etc/nginx/conf.d
+
+EXPOSE 80
+
 CMD ["nginx", "-g", "daemon off;"]
